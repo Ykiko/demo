@@ -3,8 +3,6 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.demo.Person;
-import com.example.demo.PersonForm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +22,7 @@ public class Control {
 
     /**
      * Find person by first&last name
+     *
      * @param firstName
      * @param lastName
      * @return
@@ -71,10 +70,8 @@ public class Control {
 
         return "addPerson";
     }
-    @RequestMapping(value = {"/del/id"}, method = RequestMethod.DELETE)
-    public String delPerson(Model model, //
-                            @ModelAttribute("") )
 
+//создание объекта person
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.POST)
     public String savePerson(Model model, //
                              @ModelAttribute("personForm") PersonForm personForm) {
@@ -93,6 +90,32 @@ public class Control {
 
         model.addAttribute("errorMessage", errorMessage);
         return "addPerson";
+    }
+
+    @RequestMapping(value = {"/delPerson"}, method = RequestMethod.POST)
+    public String delPerson(Model model, //
+                            @ModelAttribute("personForm") PersonForm personForm) {
+
+        String firstName = personForm.getFirstName();
+        String lastName = personForm.getLastName();
+        //Long id = (long) (persons.size() + 1);
+
+        Person person = getPersonByName(firstName, lastName);
+        if (person != null) {
+            persons.remove(person);
+            return "redirect:/personList";
+        }
+        model.addAttribute("errorMessage", errorMessage);
+        return "delPerson";
+    }
+
+    @RequestMapping(value = {"/delPerson"}, method = RequestMethod.GET)
+    public String showDelPersonPage(Model model) {
+
+        PersonForm personForm = new PersonForm();
+        model.addAttribute("personForm", personForm);
+
+        return "delPerson";
     }
 
 }
