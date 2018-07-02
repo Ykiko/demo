@@ -15,10 +15,12 @@
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Delete</th>
         </tr>
         <tr th:each ="person : ${persons}">
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
+            <td><a th:href="@{/delete (id=${person.id})}">Delete</a></td>
         </tr>
     </table>
 </div>

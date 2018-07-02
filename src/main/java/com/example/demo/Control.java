@@ -3,30 +3,18 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class Control {
 
-    private static List<Person> persons = new ArrayList<Person>();
+    private static List<Person> persons = new ArrayList<>();
 
-    /*static {
-        persons.add(new Person("Bill", "Gates", "1L"));
-        persons.add(new Person("Steve", "Jobs", "2L"));
-    }*/
-
-    /**
-     * Find person by first&last name
-     *
-     * @param firstName
-     * @param lastName
-     * @return
-     */
+    // функция поиска по first и Last name
     private Person getPersonByName(String firstName, String lastName) {
         Person person = null;
         for (Person buffer : persons) {
@@ -37,14 +25,24 @@ public class Control {
         }
         return person;
     }
-
-    // ​​​​​​​
+    // ​​​
+    private Person getPersonById(Long id) {
+        Person person = null;
+        for (Person buffer : persons) {
+            if (buffer.getId().equals(id)) {
+                person = buffer;
+            }
+        }
+        return person;
+    }
     // Вводится (inject) из application.properties.
     @Value("${welcome.message}")
     private String message;
 
-    @Value("${error.message}")
-    private String errorMessage;
+    @Value("${error.message1}")
+    private String errorMessage1;
+    @Value("${error.message2}")
+    private String errorMessage2;
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
@@ -61,7 +59,7 @@ public class Control {
 
         return "personList";
     }
-
+    //создание объекта person
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.GET)
     public String showAddPersonPage(Model model) {
 
@@ -71,7 +69,6 @@ public class Control {
         return "addPerson";
     }
 
-//создание объекта person
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.POST)
     public String savePerson(Model model, //
                              @ModelAttribute("personForm") PersonForm personForm) {
@@ -82,30 +79,29 @@ public class Control {
 
         if (firstName != null && firstName.length() > 0 //
                 && lastName != null && lastName.length() > 0) {
-            Person newPerson = new Person(firstName, lastName, id);
+            Person newPerson = new Person(id, firstName, lastName);
             persons.add(newPerson);
 
             return "redirect:/personList";
         }
 
-        model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("errorMessage", errorMessage1);
         return "addPerson";
     }
-
+// удаление объекта person
     @RequestMapping(value = {"/delPerson"}, method = RequestMethod.POST)
     public String delPerson(Model model, //
                             @ModelAttribute("personForm") PersonForm personForm) {
 
         String firstName = personForm.getFirstName();
         String lastName = personForm.getLastName();
-        //Long id = (long) (persons.size() + 1);
 
         Person person = getPersonByName(firstName, lastName);
         if (person != null) {
             persons.remove(person);
             return "redirect:/personList";
         }
-        model.addAttribute("errorMessage", errorMessage);
+        model.addAttribute("errorMessage", errorMessage2);
         return "delPerson";
     }
 
@@ -116,6 +112,26 @@ public class Control {
         model.addAttribute("personForm", personForm);
 
         return "delPerson";
+    }
+
+
+    @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
+    public String deletePerson(Model model, @RequestParam("id") String id) {
+
+        Person person = getPersonById(Long.valueOf(id));
+        if (person != null) {
+            persons.remove(person);
+            return "redirect:/personList";
+        }
+        return "redirect:/personList";
+    }
+    @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
+    public String showdeletePersonPage(Model model) {
+
+        PersonForm personForm = new PersonForm();
+        model.addAttribute("personForm", personForm);
+
+        return "personList";
     }
 
 }

@@ -7,15 +7,12 @@ public class Person {
     private String firstName;
     private String lastName;
 
-    public Person(){
 
-    }
+    public Person(Long id, String firstName, String lastName) {
 
-    public Person(String firstName, String lastName, Long id) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id = id;
-
     }
 
     public String getFirstName() {
@@ -33,6 +30,7 @@ public class Person {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
     public Long getId() {
         return id;
     }
