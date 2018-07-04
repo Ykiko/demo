@@ -20,7 +20,7 @@
         <tr th:each ="person : ${persons}">
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
-            <td><a th:href="@{/delete (id=${person.id})}">Delete</a></td>
+            <td><a th:href="@{/delete/(id=${person.id})}">Delete</a></td>
         </tr>
     </table>
 </div>
