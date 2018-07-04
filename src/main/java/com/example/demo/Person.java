@@ -1,12 +1,18 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
 @Entity
-public class Person {
+@Table(name = "Person")
+public class Person implements Serializable {
+
+    private Set<Role> repositoryRole = new HashSet<Role>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +50,14 @@ public class Person {
         return String.format(
                 "Person[id=%d, firstName='%s', lastName='%s']",
                 id, firstName, lastName);
+    }
+
+    @ManyToMany
+    @JoinTable(name = "Person_Role",
+            joinColumns = @JoinColumn(name = "PERSON_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    public Set<Role> getRepositoryRole() {
+        return this.repositoryRole;
     }
 
 }
