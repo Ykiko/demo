@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Role Person</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Role Person</h1>
+<a href="addRole">Add Role</a>
+<br/><br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Role</th>
+        </tr>
+        <tr th:each ="role : ${roles}">
+            <td th:utext="${role}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
