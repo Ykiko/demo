@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.repositorys.Repository;
+import com.example.demo.repositorys.RepositoryRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 public class Control {
     private Repository repository;
+    private RepositoryRole repositoryRole;
 
     @Autowired
-    public Control(Repository repository) {
+    public Control(Repository repository, RepositoryRole repositoryRole) {
         this.repository = repository;
+        this.repositoryRole = repositoryRole;
     }
 
     // Вводится (inject) из application.properties.
@@ -37,6 +40,7 @@ public class Control {
     public String personList(Model model) {
 
         model.addAttribute("persons", repository.findAll());
+        model.addAttribute("roles", repositoryRole.findAll());
 
         return "personList";
     }
