@@ -100,9 +100,9 @@ public class Control {
     //удаление одного объекта person по id
     @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
     public String deletePerson(Model model, @RequestParam("id") String id) {
-        //try {
+
             repository.deleteById(Long.valueOf(id));
-        //} catch (Exception ignored) {}
+
         return "redirect:/personList";
     }
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)

@@ -54,14 +54,14 @@ public class ControlRole {
         return "addRole";
     }
 
-    @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
+   @RequestMapping(value = {"/del"}, params = {"id"}, method = RequestMethod.GET)
     public String deleteRole(Model model, @RequestParam("id") String id) {
 
         repositoryRole.deleteById(Long.valueOf(id));
 
         return "redirect:/rolPerson";
     }
-    @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"del"}, method = RequestMethod.GET)
     public String showdeleteRolePage(Model model) {
 
         RoleForm roleForm = new RoleForm();

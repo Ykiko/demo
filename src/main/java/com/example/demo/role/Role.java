@@ -15,15 +15,14 @@ public class Role {
 
     public Role() {}
 
+    public Role(String rol) {
 
+        this.rol = rol;
+    }
 
     public Long getId() {
 
         return id;
-    }
-    public Role(String rol) {
-
-        this.rol = rol;
     }
 
     public String getRol() {

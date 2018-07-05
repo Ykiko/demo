@@ -18,7 +18,7 @@
         </tr>
         <tr th:each ="role : ${roles}">
             <td th:utext="${role}">...</td>
-            <td><a th:href="@{/delete/(id=${role.id})}">Delete</a></td>
+            <td><a th:href="@{/del/(id=${role.id})}">Delete</a></td>
         </tr>
     </table>
 </div>

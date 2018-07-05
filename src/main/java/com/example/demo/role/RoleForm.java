@@ -1,8 +1,8 @@
 package com.example.demo.role;
 
 public class RoleForm {
-    private String role;
     private Long id;
+    private String role;
 
     public Long getId() {
 
