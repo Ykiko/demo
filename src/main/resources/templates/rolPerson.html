@@ -8,14 +8,17 @@
 <body>
 <h1>Role Person</h1>
 <a href="addRole">Add Role</a>
+<a href="personList">Person List</a>
 <br/><br/>
 <div>
     <table border="1">
         <tr>
             <th>Role</th>
+            <th>Delete</th>
         </tr>
         <tr th:each ="role : ${roles}">
             <td th:utext="${role}">...</td>
+            <td><a th:href="@{/delete/(id=${role.id})}">Delete</a></td>
         </tr>
     </table>
 </div>

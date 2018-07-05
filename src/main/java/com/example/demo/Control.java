@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.repositorys.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -53,13 +54,13 @@ public class Control {
     public String savePerson(Model model, //
                              @ModelAttribute("personForm") PersonForm personForm) {
 
-        Long id = (long) (repository.count() + 1);
+        //Long id = (long) (repository.count() + 1);
         String firstName = personForm.getFirstName();
         String lastName = personForm.getLastName();
 
         if (firstName != null && firstName.length() > 0
                 && lastName != null && lastName.length() > 0) {
-            Person newPerson = new Person(id, firstName, lastName);
+            Person newPerson = new Person(firstName, lastName);
             repository.save(newPerson);
 
             return "redirect:/personList";

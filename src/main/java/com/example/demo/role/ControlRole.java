@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.role;
 
+import com.example.demo.PersonForm;
+import com.example.demo.repositorys.RepositoryRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ public class ControlRole {
 
         return "rolPerson";
     }
-
+//добавление Роли
     @RequestMapping(value = {"/addRole"}, method = RequestMethod.GET)
     public String showAddRolePage(Model model) {
 
@@ -39,8 +41,6 @@ public class ControlRole {
     @RequestMapping(value = {"/addRole"}, method = RequestMethod.POST)
     public String saveRole(Model model, //
                            @ModelAttribute("roleForm") RoleForm roleForm) {
-
-
         String role = roleForm.getRole();
 
         if (role != null) {
@@ -52,5 +52,21 @@ public class ControlRole {
 
         model.addAttribute("errorMessage", errorMessage1);
         return "addRole";
+    }
+
+    @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
+    public String deleteRole(Model model, @RequestParam("id") String id) {
+
+        repositoryRole.deleteById(Long.valueOf(id));
+
+        return "redirect:/rolPerson";
+    }
+    @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
+    public String showdeleteRolePage(Model model) {
+
+        RoleForm roleForm = new RoleForm();
+        model.addAttribute("roleForm", roleForm);
+
+        return "rolPerson";
     }
 }

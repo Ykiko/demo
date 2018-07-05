@@ -9,8 +9,10 @@
 <h1>Person List</h1>
 <a href="addPerson">Add Person</a>
 <a href="delPerson">Delete Person</a>
-<br>
+<br/><br/>
 <a href="rolPerson">Role Person</a>
+<a href="addrolPerson">Add Role Person</a>
+<a href="delrolPerson">Delete Role Person</a>
 <br/><br/>
 <div>
     <table border="1">
@@ -21,10 +23,10 @@
             <th> Delete </th>
         </tr>
         <tr th:each ="person : ${persons}" >
+            <td th:utext="${person.roles}">...</td>
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
             <td><a th:href="@{/delete/(id=${person.id})}">Delete</a></td>
-
         </tr>
     </table>
 </div>
