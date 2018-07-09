@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.person;
 
 import com.example.demo.role.Role;
 
@@ -57,5 +57,13 @@ public class Person implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role role ) {
+        this.roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
     }
 }

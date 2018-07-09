@@ -1,7 +1,8 @@
-package com.example.demo.role;
+package com.example.demo;
 
-import com.example.demo.PersonForm;
 import com.example.demo.repositorys.RepositoryRole;
+import com.example.demo.role.Role;
+import com.example.demo.role.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

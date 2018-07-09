@@ -8,11 +8,10 @@
 <body>
 <h1>Person List</h1>
 <a href="addPerson">Add Person</a>
-<br/>
 <a href="delPerson">Delete Person</a>
-<br/>
+<br/><br/>
 <a href="rolPerson">Role Person</a>
-<br/>
+<a href="addRolePers">Add Role Person</a>
 <a href="delrolPerson">Delete Role Person</a>
 <br/><br/>
 <div>
@@ -25,16 +24,7 @@
         </tr>
         <tr th:each ="person : ${persons}" >
 
-            <td>
-                <select multiple name="Role" size="1">
-                    <option value="">-- Role not selected! --</option>
-                    <option th:each="role : ${roles}"
-                            th:value="${role.id}"
-                            th:text="${role.getRol()}"
-                    ></option>
-                </select>
-                    <button type="submit">set</button>
-            </td>
+            <td th:utext="${person.roles}">...</td>
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
             <td><a th:href="@{/delete/(id=${person.id})}">Delete</a></td>

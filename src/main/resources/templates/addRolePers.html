@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add a Role to the Person</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Add a Role to the Person:</h1>
+
+<a href="personList">Person List</a>
+<br><br>
+
+<td>
+    <select id="personSelector" name="Person">
+        <option value="">--- Person not selected! ---</option>
+        <option th:each="person : ${persons}"
+                th:value="${person.id}"
+                th:text="${person.getFirstName() + ' ' + person.getLastName()}"
+        ></option>
+    </select>
+</td>
+<td>
+    <select id="roleSelector" name="Role">
+        <option value="">--- Role not selected! ---</option>
+        <option th:each="role : ${roles}"
+                th:value="${role.id}"
+                th:text="${role.getRol()}"
+        ></option>
+    </select>
+</td>
+<td>
+    <button onclick="sendRequest()">Set</button>
+</td>
+
+<script>
+    var personId = document.getElementById("personSelector").value;
+    var roleId = document.getElementById("roleSelector").value;
+
+    /*var personId = person.options[person.selectedIndex].value;
+    var roleId = role.options[role.selectedIndex].value;*/
+    console.log(personId);
+
+    function sendRequest() {
+        if (personId !== "--- Person not selected! ---" && roleId !== "--- Role not selected! ---") {
+            var x = new XMLHttpRequest();
+            x.open("POST", "/set?id=" + personId + "&role=" + roleId, true);
+            x.onload = function () {
+                alert("OK");
+            };
+            x.send(null);
+        }
+    }
+</script>
+
+
+
+</body>
+</html>
+<!--<div name="Role" style="display: none;">-->

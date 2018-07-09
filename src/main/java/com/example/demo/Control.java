@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.person.Person;
+import com.example.demo.person.PersonForm;
 import com.example.demo.repositorys.Repository;
 import com.example.demo.repositorys.RepositoryRole;
 import org.springframework.beans.factory.annotation.Autowired;
