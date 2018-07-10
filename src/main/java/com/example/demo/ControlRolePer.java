@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -34,7 +31,7 @@ public class ControlRolePer {
     @Value("${error.message1}")
     private String errorMessage1;
 
-    @RequestMapping(value = {"/addRolePers"}, method = RequestMethod.GET)
+    @RequestMapping(path = "/addRolePers", method = RequestMethod.GET)
     public String showAddRolePerPage(Model model) {
 
         model.addAttribute("persons", repository.findAll());
@@ -43,13 +40,17 @@ public class ControlRolePer {
         return "addRolePers";
     }
 
-    @RequestMapping(value = {"set"}, params = {"id", "role"}, method = RequestMethod.POST)
-    public String setRolePerson(Model model, @RequestParam("id") String id,
-                                  @RequestParam("role") String roleName) {
-        if (id.isEmpty() || roleName.isEmpty()) { return "error"; }
-        Optional<Person> person = repository.findById(Long.valueOf(id));
-        Role role = repositoryRole.findRoleByRol(roleName);
-        person.get().addRole(role);
+    @RequestMapping(path = "/set", method = RequestMethod.POST)
+    public String setRolePerson(Model model, @RequestBody PersonRoleForm body) {
+        if (body.getPersonId() == null || body.getRoleId() == null) { return "error"; }
+        Optional<Person> person = repository.findById(body.getPersonId());
+        Optional<Role> role = repositoryRole.findById(body.getRoleId());
+        if (person.isPresent() && role.isPresent()) {
+            person.get().addRole(role.get());
+            repository.save(person.get());
+        } else {
+            return "error";
+        }
 
         return "redirect:/personList";
     }

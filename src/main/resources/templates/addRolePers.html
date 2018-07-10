@@ -34,21 +34,28 @@
 </td>
 
 <script>
-    var personId = document.getElementById("personSelector").value;
-    var roleId = document.getElementById("roleSelector").value;
+
 
     /*var personId = person.options[person.selectedIndex].value;
     var roleId = role.options[role.selectedIndex].value;*/
-    console.log(personId);
+
 
     function sendRequest() {
+
+        var personI = document.getElementById("personSelector");
+        var personId = personI.options[personI.selectedIndex].value;
+        var roleI = document.getElementById("roleSelector");
+        var roleId = roleI.options[roleI.selectedIndex].value;
+        console.log(personId);
+
         if (personId !== "--- Person not selected! ---" && roleId !== "--- Role not selected! ---") {
             var x = new XMLHttpRequest();
-            x.open("POST", "/set?id=" + personId + "&role=" + roleId, true);
+            x.open("POST", "/set", true);
+            x.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             x.onload = function () {
                 alert("OK");
             };
-            x.send(x);
+            x.send('{"personId":' + personId + ',"roleId":' + roleId+'}');
         }
     }
 </script>
