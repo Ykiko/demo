@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.role;
 
 public class PersonRoleForm {
     private Long personId;

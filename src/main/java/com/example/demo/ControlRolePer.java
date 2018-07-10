@@ -1,11 +1,10 @@
 package com.example.demo;
 
 import com.example.demo.person.Person;
-import com.example.demo.person.PersonForm;
 import com.example.demo.repositorys.Repository;
 import com.example.demo.repositorys.RepositoryRole;
+import com.example.demo.role.PersonRoleForm;
 import com.example.demo.role.Role;
-import com.example.demo.role.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
