@@ -17,6 +17,7 @@ databaseChangeLog:
               primaryKeyName: person_pkey
             name: id
             type: BIGINT
+            autoIncrement: true
         - column:
             name: first_name
             type: VARCHAR(255)
@@ -89,4 +90,53 @@ databaseChangeLog:
         referencedColumnNames: id
         referencedTableName: role
         validate: true
-
+- changeSet:
+    id: 1531227523827-7
+    author: grigory-yki (generated)
+    changes:
+    - loadData:
+        columns:
+        - column:
+            name: first_name
+            type: STRING
+        - column:
+            name: last_name
+            type: STRING
+        encoding: UTF-8
+        file: db/changelog/database/user.csv
+        tableName: person
+#- changeSet:
+#  id: 2
+#  author: grigory-yki
+#  changes:
+#  - loadData:
+#      catalogName: cat
+#      columns:
+#      - column:
+#          name: rol
+#          type: varchar(255)
+#      encoding: UTF-8
+#      file: database/role.csv
+#      quotchar: A String
+#      schemaName: public
+#      separator: A String
+#      tableName: role
+#- changeSet:
+#  id: 3
+#  author: grigory-yki
+#  changes:
+#  - loadData:
+#      catalogName: cat
+#      columns:
+#      - column:
+#          name: person_id
+#          type: numeric
+#      - column:
+#          name: role_id
+#          type: numeric
+#      encoding: UTF-8
+#      file: database/role.csv
+#      quotchar: A String
+#      schemaName: public
+#      separator: A String
+#      tableName: person_role
