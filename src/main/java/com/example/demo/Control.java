@@ -46,6 +46,8 @@ public class Control {
 
         return "personList";
     }
+
+
     //создание объекта person
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.GET)
     public String showAddPersonPage(Model model) {
