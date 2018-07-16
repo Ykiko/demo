@@ -104,7 +104,7 @@ databaseChangeLog:
             name: last_name
             type: STRING
         encoding: UTF-8
-        file: db/changelog/database/user.csv
+        file: db/changelog/database/person.csv
         tableName: person
 - changeSet:
     id: 1531227523827-8
