@@ -18,10 +18,16 @@
       th:object="${personForm}" method="POST">
     First Name:
     <input type="text" th:field="*{firstName}" />
-    <br/>
+    <br/><br/>
     Last Name:
     <input type="text" th:field="*{lastName}" />
-    <br/>
+    <br/><br/>
+    Login:
+    <input type="text" th:field="*{username}" />
+    <br/><br/>
+    Password:
+    <input type="text" th:field="*{password}" />
+    <br/><br/>
     <input type="submit" value="Create" />
 </form>
 

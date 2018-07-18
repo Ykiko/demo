@@ -1,14 +1,13 @@
 package com.example.demo.confing;
 
-import com.example.demo.repositorys.RepositoryUser;
-import com.example.demo.user.User;
+import com.example.demo.person.Person;
+import com.example.demo.repositorys.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,13 +17,13 @@ import java.util.List;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
-    private RepositoryUser users;
+    private Repository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails loadedUser;
 
         try {
-            User client = users.findByUsername(username);
+            Person client = repository.findByUsername(username);
             loadedUser = new org.springframework.security.core.userdetails.User(
                     client.getUsername(), client.getPassword(),
                     UserAuthority.getAuth());

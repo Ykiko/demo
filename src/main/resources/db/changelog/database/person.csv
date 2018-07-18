@@ -1,4 +1,2 @@
-first_name,last_name
-Jon,Jonson
-Jon,Smit
-Mac,Gregor
+first_name,last_name,username,password
+Yki,Ykiko,Admin,{bcrypt}$2a$10$hAUveqPvtS6ugLfVek1WV.G6wkdcs1Z1IbosL8gXSFHHEsTicYpAO

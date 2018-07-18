@@ -24,16 +24,23 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    private String username;
+    private String password;
 
     public Person() {}
 
-    public Person(String firstName, String lastName) {
+    public Person(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.username = username;
+        this.password = password;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public String toString() {
+        return String.format(
+                "Person[id=%d, firstName='%s', lastName='%s', username='%s', password='%s']",
+                id, firstName, lastName, username, password);
     }
 
     public String getFirstName() {
@@ -44,11 +51,28 @@ public class Person implements Serializable {
         return lastName;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Person[id=%d, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Set<Role> getRoles() {

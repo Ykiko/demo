@@ -6,6 +6,7 @@ import com.example.demo.repositorys.Repository;
 import com.example.demo.repositorys.RepositoryRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -62,13 +63,14 @@ public class Control {
     public String savePerson(Model model, //
                              @ModelAttribute("personForm") PersonForm personForm) {
 
-        //Long id = (long) (repository.count() + 1);
         String firstName = personForm.getFirstName();
         String lastName = personForm.getLastName();
+        String username = personForm.getUsername();
+        String password = "{bcrypt}" + new BCryptPasswordEncoder().encode(personForm.getPassword());
 
         if (firstName != null && firstName.length() > 0
                 && lastName != null && lastName.length() > 0) {
-            Person newPerson = new Person(firstName, lastName);
+            Person newPerson = new Person(firstName, lastName, username, password);
             repository.save(newPerson);
 
             return "redirect:/personList";
