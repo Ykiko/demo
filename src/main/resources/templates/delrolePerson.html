@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Delete a Role to the Person</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<h1>Delete a Role to the Person:</h1>
 
+<a href="personList">Person List</a>
+<br><br>
+<td>
+    <form>
+        <tr th:each="role : ${roles}">
+        <td>
+            <input type="checkbox"
+            th:field="${person.roles}"
+            th:checked="${true}"
+            th:value="${role.id}"
+            th:text="${role.getRol()}">
+        </td>
+    </form>
+</td>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class ControlRole {
 
         return "addRole";
     }
-
+//сохранение в репозиторий
     @RequestMapping(value = {"/addRole"}, method = RequestMethod.POST)
     public String saveRole(Model model, //
                            @ModelAttribute("roleForm") RoleForm roleForm) {
@@ -54,7 +54,7 @@ public class ControlRole {
         model.addAttribute("errorMessage", errorMessage1);
         return "addRole";
     }
-
+//    удаление роли по id, если role не занята в person_role
    @RequestMapping(value = {"/del"}, params = {"id"}, method = RequestMethod.GET)
     public String deleteRole(Model model, @RequestParam("id") String id) {
 
