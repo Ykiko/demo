@@ -39,8 +39,8 @@ public class Person implements Serializable {
     @Override
     public String toString() {
         return String.format(
-                "Person[id=%d, firstName='%s', lastName='%s', username='%s', password='%s']",
-                id, firstName, lastName, username, password);
+                "Person[id=%d, firstName='%s', lastName='%s']",
+                id, firstName, lastName);
     }
 
     public String getFirstName() {

@@ -30,15 +30,12 @@
     </select>
 </td>
 <td>
-    <button onclick="sendRequest()">Set</button>
+    <button th:data-name="${_csrf.headerName}" th:data-value="${_csrf.token}" onclick=sendRequest(this)>Set</button>
 </td>
 
 <script>
 
-    /*var personId = person.options[person.selectedIndex].value;
-    var roleId = role.options[role.selectedIndex].value;*/
-
-    function sendRequest() {
+    function sendRequest(csrf) {
 
         var personI = document.getElementById("personSelector");
         var personId = personI.options[personI.selectedIndex].value;
@@ -50,6 +47,7 @@
             var x = new XMLHttpRequest();
             x.open("POST", "/set", true);
             x.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            x.setRequestHeader(csrf.dataset.name, csrf.dataset.value);
             x.onload = function () {
                 alert("OK");
             };
@@ -60,4 +58,3 @@
 
 </body>
 </html>
-<!--<div name="Role" style="display: none;">-->
