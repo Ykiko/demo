@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile person</title>
+</head>
+<body>
+<h1>Profile Person</h1>
+<table>
+    <tr>
+        <td>Id</td>
+        <td th:text="${person.id}"></td>
+    </tr>
+    <tr>
+        <td>First Name</td>
+        <td th:text="${person.firstName}"></td>
+    </tr>
+    <tr>
+        <td>Last Name</td>
+        <td th:text="${person.lastName}"></td>
+    </tr>
+    <tr>
+        <td>Role</td>
+        <td>${role.rol}</td>
+    </tr>
+</table>
+<br>
+<a href="personList">Person List</a>
+</body>
+</html>

@@ -48,6 +48,11 @@ public class Control {
         return "personList";
     }
 
+    @RequestMapping(value = {"/profilePer"}, params = {"id"}, method = RequestMethod.GET)
+    public String getById(Model model, @RequestParam("id") String id){
+        model.addAttribute("person", repository.getById((Long.valueOf(id))));
+        return "profilePer";
+    }
 
     //создание объекта person
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.GET)
