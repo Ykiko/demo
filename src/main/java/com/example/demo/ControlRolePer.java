@@ -37,7 +37,13 @@ public class ControlRolePer {
 
         return "addRolePers";
     }
-//  функция добавления реализуется за счет javascript в addRolePers.html
+
+  /*  @RequestMapping(value = {"/renamePer"}, params = {"id"}, method = RequestMethod.POST)
+    public String getById(Model model, @RequestParam("id") String id){
+        model.addAttribute( "person", repository.getById((Long.valueOf(id))));
+        return "renamePer";
+    }*/
+/*//  функция добавления реализуется за счет javascript в addRolePers.html
     @RequestMapping(path = "/set", method = RequestMethod.POST)
     public String setRolePerson(Model model, @RequestBody PersonRoleForm body) {
         if (body.getPersonId() == null || body.getRoleId() == null) { return "error"; }
@@ -51,16 +57,43 @@ public class ControlRolePer {
         }
 
         return "redirect:/personList";
-    }
-// функция удаление role из person
+    }*/
+/*// функция удаление role из person
     @RequestMapping(value = {"/delrolePerson"}, params = {"id", "role"}, method = RequestMethod.GET)
     public String addRoleto(Model model, @RequestParam("id") String id, @RequestParam("role") String roleName) {
 
         Optional<Person> person = repository.findById(Long.valueOf(id));
-        Role role = repositoryRole.findRoleByRol(roleName);
+        Role role = repositoryRole.findRoleByRole(roleName);
         model.addAttribute("roles",repositoryRole.findAll());
         person.get().removeRole(role);
 
         return "redirect:/personList";
-    }
+    }*/
 }
+   /* @GetMapping("/users/update/{id}")
+    public String updateUser(@PathVariable("id") Long id, Model model) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            model.addAttribute("user", optionalUser.get());
+            Iterable<Role> roles = rolesRepository.findAll();
+            model.addAttribute("roles", roles);
+        } else {
+            return "404";
+        }
+        return "editUser";
+    }
+
+
+    @PostMapping("/users/update/{id}")
+    public String updateUser(@PathVariable("id") Long id, @ModelAttribute("user") User user) {
+        if (userRepository.findById(id).isPresent()) {
+            Long currentId = userRepository.findById(id).get().getId();
+            user.setId(currentId);
+            String currentPassword = userRepository.findById(id).get().getPassword();
+            user.setPassword(currentPassword);
+            userRepository.save(user);
+        } else {
+            return "404";
+        }
+        return "redirect:/users/" + user.getId() + "/profile";
+    }*/

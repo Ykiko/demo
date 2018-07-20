@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.person.Person;
-import com.example.demo.person.PersonForm;
 import com.example.demo.repositorys.Repository;
 import com.example.demo.repositorys.RepositoryRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,30 +47,24 @@ public class Control {
         return "personList";
     }
 
-    @RequestMapping(value = {"/profilePer"}, params = {"id"}, method = RequestMethod.GET)
-    public String getById(Model model, @RequestParam("id") String id){
-        model.addAttribute("person", repository.getById((Long.valueOf(id))));
-        return "profilePer";
-    }
-
     //создание объекта person
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.GET)
     public String showAddPersonPage(Model model) {
 
-        PersonForm personForm = new PersonForm();
-        model.addAttribute("personForm", personForm);
+        Person person = new Person();
+        model.addAttribute("person", person);
 
         return "addPerson";
     }
 
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.POST)
     public String savePerson(Model model, //
-                             @ModelAttribute("personForm") PersonForm personForm) {
+                             @ModelAttribute("person") Person person) {
 
-        String firstName = personForm.getFirstName();
-        String lastName = personForm.getLastName();
-        String username = personForm.getUsername();
-        String password = "{bcrypt}" + new BCryptPasswordEncoder().encode(personForm.getPassword());
+        String firstName = person.getFirstName();
+        String lastName = person.getLastName();
+        String username = person.getUsername();
+        String password = "{bcrypt}" + new BCryptPasswordEncoder().encode(person.getPassword());
 
         if (firstName != null && firstName.length() > 0
                 && lastName != null && lastName.length() > 0) {
@@ -84,16 +77,42 @@ public class Control {
         model.addAttribute("errorMessage", errorMessage1);
         return "addPerson";
     }
+
+    @RequestMapping(value = {"/profilePer"}, params = {"id"}, method = RequestMethod.GET)
+    public String getById(Model model, @RequestParam("id") Long id){
+        model.addAttribute("person", repository.getById(id));
+        return "profilePer";
+    }
+    @RequestMapping(value = {"/renamePer"}, params = {"id"}, method = RequestMethod.GET)
+    public String renamePer(Model model, @RequestParam("id") Long id){
+        model.addAttribute("person", repository.getById(id));
+        return "profilePer";
+    }
+
+    @RequestMapping(value = {"/renamePer"}, params = {"id"}, method = RequestMethod.POST)
+    public String renamePer(Model model, @RequestParam("id") Long id, //
+                            @ModelAttribute("person") Person person) {
+
+        if (repository.findById(id).isPresent()) {
+            Long currentId = repository.findById(id).get().getId();
+            person.setId(currentId);
+            String currentPassword = repository.findById(id).get().getPassword();
+            person.setPassword(currentPassword);
+            repository.save(person);
+        }
+        model.addAttribute("errorMessage", errorMessage1);
+        return "redirect:/profilePer" + person.getId() + "personList";
+    }
 // удаление объекта person по fistname and lastname
     @RequestMapping(value = {"/delPerson"}, method = RequestMethod.POST)
     public String delPerson(Model model, //
-                            @ModelAttribute("personForm") PersonForm personForm) {
+                            @ModelAttribute("person") Person person) {
         try {
-            Person person = repository.findByFirstNameAndLastName(
-                    personForm.getFirstName(),
-                    personForm.getLastName());
-            if (person != null) {
-                repository.delete(person);
+            Person persona = repository.findByFirstNameAndLastName(
+                    person.getFirstName(),
+                    person.getLastName());
+            if (persona != null) {
+                repository.delete(persona);
             }
         } catch (Exception ignored) {
             model.addAttribute("errorMessage", errorMessage2);
@@ -106,25 +125,25 @@ public class Control {
     @RequestMapping(value = {"/delPerson"}, method = RequestMethod.GET)
     public String showDelPersonPage(Model model) {
 
-        PersonForm personForm = new PersonForm();
-        model.addAttribute("personForm", personForm);
+        Person person = new Person();
+        model.addAttribute("person", person);
 
         return "delPerson";
     }
 
     //удаление одного объекта person по id
     @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
-    public String deletePerson(Model model, @RequestParam("id") String id) {
+    public String deletePerson(Model model, @RequestParam("id") Long id) {
 
-            repository.deleteById(Long.valueOf(id));
+            repository.deleteById(id);
 
         return "redirect:/personList";
     }
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
     public String showdeletePersonPage(Model model) {
 
-        PersonForm personForm = new PersonForm();
-        model.addAttribute("personForm", personForm);
+        Person person = new Person();
+        model.addAttribute("person", person);
 
         return "personList";
     }

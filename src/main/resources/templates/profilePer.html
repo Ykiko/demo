@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Profile person</title>
@@ -11,8 +12,9 @@
 <br><br>
 <a href="/personList">Person List</a>
 <br><br>
+<a href="/renamePer">Update Person</a>
+<br><br>
 <a href="/addRolePers">Add Role Person</a>
-<a href="/delrolePerson">Delete Role Person</a>
 <br><br>
 <table border="3">
     <tr>
@@ -28,10 +30,6 @@
         <td th:text="${person.lastName}"></td>
     </tr>
     <tr>
-        <td>Role</td>
-        <td th:text="${person.roles}"></td>
-    </tr>
-    <tr>
         <td>Login</td>
         <td th:text="${person.username}"></td>
     </tr>
@@ -45,5 +43,19 @@
     </tr>
 </table>
 <br>
+<h2>Role Person</h2>
+<br>
+<td>
+    <table class="table table-bordered">
+        <tr th:each="role : ${roles}">
+            <td>
+                <input type="checkbox"
+                       th:field="${person.roles}"
+                       th:checked="${person.roles.conteins(role)}"
+                       th:value="${role.id}"/>
+                <label th:text="${role}"></label>
+            </td>
+    </table>
+</td>
 </body>
 </html>

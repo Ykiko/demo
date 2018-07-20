@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <title>Add a Role to the Person</title>
@@ -25,7 +26,7 @@
         <option value="">--- Role not selected! ---</option>
         <option th:each="role : ${roles}"
                 th:value="${role.id}"
-                th:text="${role.getRol()}"
+                th:text="${role.getRole()}"
         ></option>
     </select>
 </td>

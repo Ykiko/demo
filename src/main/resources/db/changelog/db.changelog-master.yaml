@@ -45,7 +45,7 @@ databaseChangeLog:
             type: BIGSERIAL
             autoIncrement: true
         - column:
-            name: rol
+            name: role
             type: VARCHAR(255)
         tableName: role
 - changeSet:
@@ -125,7 +125,7 @@ databaseChangeLog:
     - loadData:
         columns:
         - column:
-            name: rol
+            name: role
             type: STRING
         encoding: UTF-8
         file: db/changelog/database/role.csv
