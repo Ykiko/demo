@@ -13,8 +13,7 @@
 <a href="delPerson">Delete Person</a>
 <br/><br/>
 <a href="rolPerson">Role Person</a>
-<a href="addRolePers">Add Role Person</a>
-<a href="delrolePerson">Delete Role Person</a>
+
 <br/><br/>
 <div>
     <table border="1">
@@ -23,7 +22,6 @@
             <th> First Name </th>
             <th> Last Name </th>
             <th> -Setting- </th>
-            <th> --Delete-- </th>
         </tr>
         <tr th:each ="person : ${persons}" >
 
@@ -31,7 +29,6 @@
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
             <td><a th:href="@{/profilePer/(id=${person.id})}">profile</a></td>
-            <td><a th:href="@{/delete/(id=${person.id})}">Delete</a></td>
         </tr>
     </table>
 </div>

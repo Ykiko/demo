@@ -4,10 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Profile person</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <h1>Profile Person</h1>
-<table>
+<br><br>
+<a href="/personList">Person List</a>
+<br><br>
+<a href="/addRolePers">Add Role Person</a>
+<a href="/delrolePerson">Delete Role Person</a>
+<br><br>
+<table border="3">
     <tr>
         <td>Id</td>
         <td th:text="${person.id}"></td>
@@ -22,10 +29,21 @@
     </tr>
     <tr>
         <td>Role</td>
-        <td>${role.rol}</td>
+        <td th:text="${person.roles}"></td>
+    </tr>
+    <tr>
+        <td>Login</td>
+        <td th:text="${person.username}"></td>
+    </tr>
+    <!--<tr>
+        <td>Password</td>
+        <td th:text="${person.password}"></td>
+    </tr>-->
+    <tr>
+        <td>Delete</td>
+        <td><a th:href="@{/delete/(id=${person.id})}">Delete</a></td>
     </tr>
 </table>
 <br>
-<a href="personList">Person List</a>
 </body>
 </html>
