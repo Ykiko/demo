@@ -56,9 +56,9 @@ public class ControlRole {
     }
 //    удаление роли по id, если role не занята в person_role
    @RequestMapping(value = {"/del"}, params = {"id"}, method = RequestMethod.GET)
-    public String deleteRole(Model model, @RequestParam("id") String id) {
+    public String deleteRole(Model model, @RequestParam("id") Long id) {
 
-        repositoryRole.deleteById(Long.valueOf(id));
+        repositoryRole.deleteById(id);
 
         return "redirect:/rolPerson";
     }

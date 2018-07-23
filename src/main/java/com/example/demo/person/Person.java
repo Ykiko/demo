@@ -39,8 +39,8 @@ public class Person implements Serializable {
     @Override
     public String toString() {
         return String.format(
-                "Person[id=%d, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
+                "Person[id=%d, firstName='%s', lastName='%s', username='%s']",
+                id, firstName, lastName, username);
     }
 
     public String getFirstName() {
@@ -49,6 +49,14 @@ public class Person implements Serializable {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {

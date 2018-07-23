@@ -54,3 +54,16 @@ public class PersonForm {
     }
 
 }
+
+  /*  @GetMapping("/users/update/{id}")
+    public String updateUser(@PathVariable("id") Long id, Model model) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            model.addAttribute("user", optionalUser.get());
+            Iterable<Role> roles = rolesRepository.findAll();
+            model.addAttribute("roles", roles);
+        } else {
+            return "404";
+        }
+        return "editUser";
+    }*/

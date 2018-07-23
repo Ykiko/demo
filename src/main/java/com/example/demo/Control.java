@@ -1,14 +1,19 @@
 package com.example.demo;
 
 import com.example.demo.person.Person;
+import com.example.demo.person.PersonForm;
 import com.example.demo.repositorys.Repository;
 import com.example.demo.repositorys.RepositoryRole;
+import com.example.demo.role.Role;
+import com.example.demo.role.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 
@@ -29,6 +34,7 @@ public class Control {
     private String errorMessage1;
     @Value("${error.message2}")
     private String errorMessage2;
+
     //главная страница
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
@@ -37,6 +43,7 @@ public class Control {
 
         return "index";
     }
+
     //страница пользователей
     @RequestMapping(value = {"/personList"}, method = RequestMethod.GET)
     public String personList(Model model) {
@@ -51,20 +58,19 @@ public class Control {
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.GET)
     public String showAddPersonPage(Model model) {
 
-        Person person = new Person();
-        model.addAttribute("person", person);
+        PersonForm personForm = new PersonForm();
+        model.addAttribute("personForm", personForm);
 
         return "addPerson";
     }
 
     @RequestMapping(value = {"/addPerson"}, method = RequestMethod.POST)
-    public String savePerson(Model model, //
-                             @ModelAttribute("person") Person person) {
+    public String savePerson(Model model, @ModelAttribute("personForm") PersonForm personForm) {
 
-        String firstName = person.getFirstName();
-        String lastName = person.getLastName();
-        String username = person.getUsername();
-        String password = "{bcrypt}" + new BCryptPasswordEncoder().encode(person.getPassword());
+        String firstName = personForm.getFirstName();
+        String lastName = personForm.getLastName();
+        String username = personForm.getUsername();
+        String password = "{bcrypt}" + new BCryptPasswordEncoder().encode(personForm.getPassword());
 
         if (firstName != null && firstName.length() > 0
                 && lastName != null && lastName.length() > 0) {
@@ -79,54 +85,55 @@ public class Control {
     }
 
     @RequestMapping(value = {"/profilePer"}, params = {"id"}, method = RequestMethod.GET)
-    public String getById(Model model, @RequestParam("id") Long id){
-        model.addAttribute("person", repository.getById(id));
-        return "profilePer";
-    }
-    @RequestMapping(value = {"/renamePer"}, params = {"id"}, method = RequestMethod.GET)
-    public String renamePer(Model model, @RequestParam("id") Long id){
+    public String getById(Model model, @RequestParam("id") Long id) {
         model.addAttribute("person", repository.getById(id));
         return "profilePer";
     }
 
-    @RequestMapping(value = {"/renamePer"}, params = {"id"}, method = RequestMethod.POST)
-    public String renamePer(Model model, @RequestParam("id") Long id, //
-                            @ModelAttribute("person") Person person) {
+    @RequestMapping(value = {"/updatePer/{id}"}, method = RequestMethod.GET)
+    public String updatePer(@PathVariable("id") Long id, Model model) {
 
+        model.addAttribute("person", repository.getById(id));
+
+        return "renamePer";
+    }
+
+    @RequestMapping(value = {"/updatePer/{id}"}, method = RequestMethod.POST)
+    public String savePer(@PathVariable("id") Long id,
+                          @ModelAttribute("person") Person person) {
+        Optional<Person> editPerson = repository.findById(id);
         if (repository.findById(id).isPresent()) {
-            Long currentId = repository.findById(id).get().getId();
-            person.setId(currentId);
-            String currentPassword = repository.findById(id).get().getPassword();
-            person.setPassword(currentPassword);
+            Person currentPerson = editPerson.get();
+            person.setId(currentPerson.getId());
+            person.setPassword(currentPerson.getPassword());
             repository.save(person);
         }
-        model.addAttribute("errorMessage", errorMessage1);
-        return "redirect:/profilePer" + person.getId() + "personList";
+        return "redirect:/profilePer/?id=" + person.getId();
     }
-// удаление объекта person по fistname and lastname
+
+    // удаление объекта person по fistname and lastname
     @RequestMapping(value = {"/delPerson"}, method = RequestMethod.POST)
     public String delPerson(Model model, //
-                            @ModelAttribute("person") Person person) {
+                            @ModelAttribute("personForm") PersonForm personForm) {
         try {
-            Person persona = repository.findByFirstNameAndLastName(
-                    person.getFirstName(),
-                    person.getLastName());
-            if (persona != null) {
-                repository.delete(persona);
+            Person person = repository.findByFirstNameAndLastName(
+                    personForm.getFirstName(),
+                    personForm.getLastName());
+            if (person != null) {
+                repository.delete(person);
             }
         } catch (Exception ignored) {
             model.addAttribute("errorMessage", errorMessage2);
             return "delPerson";
         }
         return "redirect:/personList";
-
     }
 
     @RequestMapping(value = {"/delPerson"}, method = RequestMethod.GET)
     public String showDelPersonPage(Model model) {
 
-        Person person = new Person();
-        model.addAttribute("person", person);
+        PersonForm personForm = new PersonForm();
+        model.addAttribute("personForm", personForm);
 
         return "delPerson";
     }
@@ -135,15 +142,16 @@ public class Control {
     @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
     public String deletePerson(Model model, @RequestParam("id") Long id) {
 
-            repository.deleteById(id);
+        repository.deleteById(id);
 
         return "redirect:/personList";
     }
+
     @RequestMapping(value = {"delete"}, method = RequestMethod.GET)
     public String showdeletePersonPage(Model model) {
 
-        Person person = new Person();
-        model.addAttribute("person", person);
+        PersonForm personForm = new PersonForm();
+        model.addAttribute("personForm", personForm);
 
         return "personList";
     }

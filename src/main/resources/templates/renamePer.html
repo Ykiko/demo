@@ -14,8 +14,8 @@
    would be @{/edit.html}
    -->
 
-<form th:action="@{/renamePer.html}"
-      th:object="${personForm}" method="POST">
+<form th:action="@{/updatePer/{id}(id=${person.id})}"
+      th:object="${person}" method="POST">
     First Name:
     <input type="text" th:field="*{firstName}" th:value="${person.firstName}"/>
     <br/><br/>
