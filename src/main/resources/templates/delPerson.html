@@ -15,7 +15,7 @@
    -->
 
 <form th:action="@{/delPerson}"
-      th:object="${personForm}" method="post">
+      th:object="${person}" method="post">
     First Name:
     <input type="text" th:field="*{firstName}" />
     <br/>

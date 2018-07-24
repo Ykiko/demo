@@ -16,7 +16,7 @@
    -->
 
 <form th:action="@{/addRole}"
-      th:object="${roleForm}" method="POST">
+      th:object="${role}" method="POST">
     Role:
     <input type="text" th:field="*{role}" />
 
