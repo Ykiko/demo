@@ -8,6 +8,9 @@ import java.util.Set;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "Person")
@@ -24,6 +27,8 @@ public class Person implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    @Size(min = 2, max = 10)
+    @NotNull
     private String username;
     private String password;
 

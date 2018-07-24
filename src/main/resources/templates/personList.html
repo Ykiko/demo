@@ -28,7 +28,7 @@
             <td th:utext="${person.roles}">...</td>
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
-            <td><a th:href="@{/profilePer/(id=${person.id})}">profile</a></td>
+            <td><a th:href="@{/profilePer/{id}(id=${person.id})}">profile</a></td>
         </tr>
     </table>
 </div>

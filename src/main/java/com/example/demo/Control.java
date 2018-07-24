@@ -4,6 +4,7 @@ import com.example.demo.person.Person;
 import com.example.demo.person.PersonForm;
 import com.example.demo.repositorys.Repository;
 import com.example.demo.repositorys.RepositoryRole;
+import com.example.demo.role.PersonRoleForm;
 import com.example.demo.role.Role;
 import com.example.demo.role.RoleForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,20 +85,20 @@ public class Control {
         return "addPerson";
     }
 
-    @RequestMapping(value = {"/profilePer"}, params = {"id"}, method = RequestMethod.GET)
-    public String getById(Model model, @RequestParam("id") Long id) {
+// страница профиля Person
+    @RequestMapping(value = {"/profilePer/{id}"}, method = RequestMethod.GET)
+    public String getById(@PathVariable("id") Long id, Model model) {
         model.addAttribute("person", repository.getById(id));
         return "profilePer";
     }
-
+// страница по изменению данных Person
     @RequestMapping(value = {"/updatePer/{id}"}, method = RequestMethod.GET)
     public String updatePer(@PathVariable("id") Long id, Model model) {
-
         model.addAttribute("person", repository.getById(id));
-
+        model.addAttribute("roles", repositoryRole.findAll());
         return "renamePer";
     }
-
+// функция изменения данных Person
     @RequestMapping(value = {"/updatePer/{id}"}, method = RequestMethod.POST)
     public String savePer(@PathVariable("id") Long id,
                           @ModelAttribute("person") Person person) {
@@ -108,9 +109,8 @@ public class Control {
             person.setPassword(currentPerson.getPassword());
             repository.save(person);
         }
-        return "redirect:/profilePer/?id=" + person.getId();
+        return "redirect:/profilePer/" + person.getId();
     }
-
     // удаление объекта person по fistname and lastname
     @RequestMapping(value = {"/delPerson"}, method = RequestMethod.POST)
     public String delPerson(Model model, //
@@ -139,8 +139,8 @@ public class Control {
     }
 
     //удаление одного объекта person по id
-    @RequestMapping(value = {"/delete"}, params = {"id"}, method = RequestMethod.GET)
-    public String deletePerson(Model model, @RequestParam("id") Long id) {
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.GET)
+    public String deletePerson(@PathVariable("id") Long id) {
 
         repository.deleteById(id);
 

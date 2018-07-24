@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8" />
     <title>Update Person</title>
@@ -17,18 +18,29 @@
 <form th:action="@{/updatePer/{id}(id=${person.id})}"
       th:object="${person}" method="POST">
     First Name:
-    <input type="text" th:field="*{firstName}" th:value="${person.firstName}"/>
+    <input type="text" th:field="*{firstName}" th:value="${person.firstName}" required/>
     <br/><br/>
     Last Name:
-    <input type="text" th:field="*{lastName}" th:value="${person.lastName}"/>
+    <input type="text" th:field="*{lastName}" th:value="${person.lastName}" required/>
     <br/><br/>
     Login:
-    <input type="text" th:field="*{username}" th:value="${person.username}"/>
+    <input type="text" th:field="*{username}" th:value="${person.username}" required/>
+    <br/><br/>
+    <td>
+        <table class="table table-bordered">
+            <tr th:each="role : ${roles}">
+                <td>
+                    <input type="checkbox"
+                           th:field="${person.roles}"
+                           th:checked="${true}"
+                           th:value="${role.id}"/>
+                    <label th:text="${role}"></label>
+                </td>
+        </table>
+    </td>
     <br/><br/>
     <input type="submit" value="Create" />
 </form>
-
-<br/>
 
 <!-- Check if errorMessage is not null and not empty -->
 

@@ -11,10 +11,6 @@
 <h1>Profile Person</h1>
 <br><br>
 <a href="/personList">Person List</a>
-<!--<br><br>
-<a href="/renamePer">Update Person</a>-->
-<br><br>
-<a href="/addRolePers">Add Role Person</a>
 <br><br>
 <table border="3">
     <tr>
@@ -34,8 +30,12 @@
         <td th:text="${person.username}"></td>
     </tr>
     <tr>
+        <td>Role</td>
+        <td th:text="${person.roles}"></td>
+    </tr>
+    <tr>
         <td>Delete</td>
-        <td><a th:href="@{/delete/(id=${person.id})}">Delete</a></td>
+        <td><a th:href="@{/delete/{id}(id=${person.id})}">Delete</a></td>
     </tr>
     <tr>
         <td>Rename</td>
@@ -43,19 +43,5 @@
     </tr>
 </table>
 <br>
-<h2>Role Person</h2>
-<br>
-<td>
-    <table class="table table-bordered">
-        <tr th:each="role : ${roles}">
-            <td>
-                <input type="checkbox"
-                       th:field="${person.roles}"
-                       th:checked="${person.roles.conteins(role)}"
-                       th:value="${role.id}"/>
-                <label th:text="${role}"></label>
-            </td>
-    </table>
-</td>
 </body>
 </html>
