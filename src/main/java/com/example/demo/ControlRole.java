@@ -37,17 +37,18 @@ public class ControlRole {
 
         Role role = new Role();
         model.addAttribute("role", role);
+        model.addAttribute("roles", repositoryRole.findAll());
 
         return "addRole";
     }
 
     //сохранение в репозиторий
     @RequestMapping(value = {"/addRole"}, method = RequestMethod.POST)
-    public String saveRole(Model model, //
-                           @ModelAttribute("role") Role role) {
-        String role = role.getRole();
+    public String saveRole(Model model, @ModelAttribute("roles") Role roles) {
 
-        if (role != null) {
+        String role = roles.getRole();
+
+        if (role != null && role.length() > 0) {
             Role newRole = new Role(role);
             repositoryRole.save(newRole);
 

@@ -18,14 +18,11 @@
 <div>
     <table border="1">
         <tr>
-            <th> ---Role--- </th>
             <th> First Name </th>
             <th> Last Name </th>
             <th> -Setting- </th>
         </tr>
         <tr th:each ="person : ${persons}" >
-
-            <td th:utext="${person.roles}">...</td>
             <td th:utext="${person.firstName}">...</td>
             <td th:utext="${person.lastName}">...</td>
             <td><a th:href="@{/profilePer/{id}(id=${person.id})}">profile</a></td>

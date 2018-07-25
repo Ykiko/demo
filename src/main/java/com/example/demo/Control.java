@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Controller
 
@@ -70,13 +73,31 @@ public class Control {
         String username = person.getUsername();
         String password = "{bcrypt}" + new BCryptPasswordEncoder().encode(person.getPassword());
 
-        if (firstName != null && firstName.length() > 0
+        if (firstName != null && !firstName.isEmpty()
                 && lastName != null && lastName.length() > 0) {
 
-                Person newPerson = new Person(firstName, lastName, username, password);
-                repository.save(newPerson);
+            List<Character> firstCharNames = new ArrayList<>();
+            repository.findAll().forEach(item -> {
+                firstCharNames.add(item.getUsername().charAt(0));
+            });
+            if (firstCharNames.contains(username.charAt(0))) {
+                return errorMessage1;
+            }
 
-                return "redirect:/personList";
+            Person newPerson = new Person(firstName, lastName, username, password);
+            repository.save(newPerson);
+            return "redirect:/personList";
+
+           /* for (int i : repository.) {
+           String firstChar = repository.setUsername;
+                boolean result = username.regionMatches(0, firstChar, 0, 1);
+                if (result = true) {
+                    return errorMessage1;
+                } else {
+                    Person newPerson = new Person(firstName, lastName, username, password);
+                    repository.save(newPerson);
+                    return "redirect:/personList";
+                }*/
         }
 
         model.addAttribute("errorMessage", errorMessage1);
